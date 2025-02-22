@@ -34,6 +34,7 @@ export async function POST(request: NextRequest) {
     password: hashedPassword,
     role: role,
     money: 0,
+    jwtToken: "",
     createdAt: new Date(),
   };
 
