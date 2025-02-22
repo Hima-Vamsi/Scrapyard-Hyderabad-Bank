@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function CreateUser() {
   return (
-    <div className="flex justify-center items-center min-h-screen p-6">
+    <div className="flex flex-col justify-start items-center min-h-screen pt-20 p-6">
       <CreateUserForm />
     </div>
   );
