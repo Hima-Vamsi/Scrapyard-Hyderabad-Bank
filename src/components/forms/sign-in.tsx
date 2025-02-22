@@ -1,11 +1,12 @@
 "use client";
 
-import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+type User = { role: "attendee" | "organizer" };
 
 export function SignInForm() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -13,9 +14,22 @@ export function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
-  const isValidEmail = (email: string) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const res = await fetch("/api/auth/me", { credentials: "include" });
+
+        if (res.ok) {
+          const data: User = await res.json();
+          router.replace(`/${data.role}/dashboard`);
+        }
+      } catch (error) {
+        console.error("Session check failed:", error);
+      }
+    };
+
+    checkSession();
+  }, [router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +37,7 @@ export function SignInForm() {
 
   const handleContinue = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isValidEmail(formData.email)) {
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       setShowPassword(true);
     } else {
       setMessage("Please enter a valid email address.");
@@ -51,15 +65,13 @@ export function SignInForm() {
 
   return (
     <div className="w-full max-w-sm">
-      <div>
-        <h2 className="font-bold uppercase text-[#e0e6ed] opacity-40 text-[16px]">
-          Scrapyard Hyderabad
-        </h2>
-        <h1 className="text-[48px] font-semibold tracking-tight text-[#EC3750]">
-          Sign in to SHB
-        </h1>
-        {message && <p className="text-sm text-red-500">{message}</p>}
-      </div>
+      <h2 className="font-bold uppercase text-[#e0e6ed] opacity-40 text-[16px]">
+        Scrapyard Hyderabad
+      </h2>
+      <h1 className="text-[48px] font-semibold tracking-tight text-[#EC3750]">
+        Sign in to SHB
+      </h1>
+      {message && <p className="text-sm text-red-500">{message}</p>}
       <form
         onSubmit={showPassword ? handleSubmit : handleContinue}
         className="space-y-4"
@@ -96,7 +108,6 @@ export function SignInForm() {
             />
           </div>
         )}
-
         <div className="flex justify-end">
           <Button
             type="submit"

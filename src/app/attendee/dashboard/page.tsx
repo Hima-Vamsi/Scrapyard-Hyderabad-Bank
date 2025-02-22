@@ -1,5 +1,11 @@
 import React from "react";
+import { Metadata } from "next";
 import LogOutButton from "@/components/LogOutButton";
+
+export const metadata: Metadata = {
+  title: "Dashboard - SHB",
+  description: "Attendee Dashboard for Scrapyard Hyderabad Bank",
+};
 
 const AttendeeDashboard = () => {
   return (

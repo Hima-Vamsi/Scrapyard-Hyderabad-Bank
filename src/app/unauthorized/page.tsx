@@ -2,6 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Unauthorized - SHB",
+  description: "Unauthorized access page for SHB",
+};
 
 type User = { role: "attendee" | "organizer" };
 
