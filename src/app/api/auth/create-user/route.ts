@@ -35,7 +35,6 @@ export async function POST(request: NextRequest) {
     role: role,
     money: 0,
     jwtToken: "",
-    createdAt: new Date(),
   };
 
   await db.collection("users").insertOne(newUser);
