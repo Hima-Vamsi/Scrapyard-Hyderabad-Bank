@@ -1,5 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
+import AwardPoints from "@/components/organizer/forms/AwardMoney";
+
 
 export const metadata: Metadata = {
   title: "Dashboard - SHB",
@@ -8,15 +10,9 @@ export const metadata: Metadata = {
 
 const OrganizerDashboard = () => {
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen pt-20 text-center">
-      <div className="text-4xl font-bold text-blue-600">
-        Organizer Dashboard
-      </div>
-      <p className="text-lg text-gray-600 mt-4">Welcome back, Organizer!</p>
-      <p className="text-lg text-gray-600 mt-2">
-        This Page is Under Construction.
-      </p>
-    </div>
+  <div>
+    <AwardPoints />
+  </div>
   );
 };
 

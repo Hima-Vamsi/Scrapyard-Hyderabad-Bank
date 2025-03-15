@@ -20,7 +20,9 @@ export default function SessionGuard({
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("/api/auth/me", { credentials: "include" });
+        const res = await fetch("/api/public/util/me", {
+          credentials: "include",
+        });
 
         if (res.ok) {
           const data = await res.json();
@@ -54,7 +56,7 @@ export default function SessionGuard({
   if (loading)
     return (
       <div className="w-screen h-screen flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-t-transparent border-gray-500 rounded-full animate-spin"></div>
       </div>
     );
 

@@ -24,14 +24,14 @@ function setupDatabaseListeners() {
 
 async function connectToDatabase() {
   if (mongoose.connection.readyState === 1) {
-    return mongoose.connection.db;
+    return mongoose.connection.useDb('accounts');
   }
 
   try {
     setupDatabaseListeners();
     await mongoose.connect(process.env.MONGODB_URI || "");
 
-    return mongoose.connection.db;
+    return mongoose.connection.useDb('accounts');
   } catch (error) {
     console.error("Database connection error:", error);
     throw error;

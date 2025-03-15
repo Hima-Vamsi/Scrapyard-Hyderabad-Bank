@@ -17,7 +17,9 @@ export function SignInForm() {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const res = await fetch("/api/auth/me", { credentials: "include" });
+        const res = await fetch("/api/public/util/me", {
+          credentials: "include",
+        });
 
         if (res.ok) {
           const data: User = await res.json();
@@ -48,7 +50,7 @@ export function SignInForm() {
     e.preventDefault();
     setMessage("");
 
-    const response = await fetch("/api/auth/sign-in", {
+    const response = await fetch("/api/public/auth/sign-in", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),

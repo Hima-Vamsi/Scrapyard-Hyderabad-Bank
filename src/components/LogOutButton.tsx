@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { IoExitOutline } from "react-icons/io5";
+import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const LogOutButton = () => {
@@ -13,7 +13,7 @@ const LogOutButton = () => {
   }, []);
 
   const handleLogout = async () => {
-    const response = await fetch("/api/auth/logout", { method: "POST" });
+    const response = await fetch("/api/public/auth/logout", { method: "POST" });
     if (response.ok) {
       router.push("/");
     } else {
@@ -25,7 +25,7 @@ const LogOutButton = () => {
 
   return (
     <button onClick={handleLogout} className="text-[28px]">
-      <IoExitOutline />
+      <LogOut />
     </button>
   );
 };

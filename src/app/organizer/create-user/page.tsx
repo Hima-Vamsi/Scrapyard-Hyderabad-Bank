@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import CreateUserForm from "@/components/forms/create-user";
+import CreateUserForm from "@/components/auth-forms/create-user";
 
 export const metadata: Metadata = {
   title: "Create User - SHB",

@@ -56,6 +56,8 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  console.log(db)
+
   const existingUser = await db.collection("users").findOne({ email });
 
   if (!existingUser) {
@@ -70,17 +72,18 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Generate JWT token
   const token = jwt.sign(
-    { email: existingUser.email, role: existingUser.role },
+    {
+      name: existingUser.name,
+      email: existingUser.email,
+      role: existingUser.role,
+    },
     SECRET_KEY,
-    { expiresIn: "1d" }
+    { expiresIn: "1h" }
   );
 
-  // Hash the JWT token
   const hashedToken = await bcrypt.hash(token, 10);
 
-  // Update the user's jwtToken in the database
   await db
     .collection("users")
     .updateOne(
@@ -88,13 +91,12 @@ export async function POST(request: NextRequest) {
       { $set: { jwtToken: hashedToken } }
     );
 
-  // Set cookie
   const cookie = serialize("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     path: "/",
     sameSite: "lax",
-    maxAge: 60 * 60 * 24, // 1 day
+    maxAge: 60 * 60,
   });
 
   const response = NextResponse.json(
